@@ -1,8 +1,10 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include "bHole.cpp"
+#include "bHole.h"
 
 class WHole
 {
