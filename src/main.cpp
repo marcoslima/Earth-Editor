@@ -2,8 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-
-#include <wHole.h>
+#include <universe.h>
 
 void input();
 
@@ -13,10 +12,7 @@ enum Material{ none, bHole, particle, wHole };
 sf::RenderWindow *window;
 sf::ContextSettings settings;
 
-std::vector<Particle> particles;
-std::vector<BHole> bHoles;
-std::vector<WHole> wHoles;
-
+Universe g_universe;
 
 Material material = none;
 
@@ -34,23 +30,8 @@ int main()
         input();
         window->clear(sf::Color(5, 5, 5));
 
-        for(auto& bhole : bHoles)
-        {
-            bHole.gravity(particles);
-            window->draw(bHole.rect);
-        }
-
-        for(auto& whole : wHoles)
-        {
-            wHole.gravity(particles);
-            window->draw(wHole.m_rect);
-        }
-
-        for(auto& particle : particles)
-        {
-            particle.move();
-            window->draw(particle.rect);
-        }
+        g_universe.tick();
+        g_universe.draw(window);
 
         window->display();
     }
@@ -69,37 +50,23 @@ void input()
         {
             switch(material)
             {
-                case Material(bHole):
-                {
-                    BHole bHole( sf::Mouse::getPosition(*window) );
-                    bHoles.push_back(bHole);
-                    break;
-                }
+            case Material(bHole):
+                g_universe.add_black_hole(sf::Mouse::getPosition(*window));
+                break;
 
-                case Material(particle):
-                {
-                    Particle particle( sf::Mouse::getPosition(*window) );
-                    particles.push_back(particle);
-                    break;
-                }
+            case Material(particle):
+                g_universe.add_particle( sf::Mouse::getPosition(*window) );
+                break;
 
-                case Material(wHole):
-                {
-                    WHole wHole( sf::Mouse::getPosition(*window) );
-                    wHoles.push_back(wHole);
-                    break;
-                }
-
-                case Material(none):
-                    break;
+            case Material(wHole):
+                g_universe.add_white_hole( sf::Mouse::getPosition(*window) );
+                break;
             }
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
         {
-            bHoles.clear();
-            particles.clear();
-            wHoles.clear();
+            g_universe.clear();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
