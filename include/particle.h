@@ -12,7 +12,7 @@ public:
     {
         rect.setSize(sf::Vector2f(2,2));
         rect.setOrigin( sf::Vector2f(1,1) );
-        rect.setFillColor( sf::Color::Red );
+        rect.setFillColor( sf::Color::Green );
         rect.setPosition( (sf::Vector2f)position );
         velocity = sf::Vector2f(0,0);
     }

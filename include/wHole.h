@@ -21,43 +21,19 @@ public:
 
     void gravity( std::vector<Particle> &particles )
     {
-        int vecSize = particles.size();
         sf::Vector2f hol = m_rect.getPosition();
         for (auto& particle : particles)
         {
             sf::Vector2f par = particle.rect.getPosition();
 
-            float a = abs( par.x - hol.x );
-            float b = abs( par.y - hol.y );
-            float c = std::sqrt(a * a + b * b);
-            float dx, dy;
-
-            if (a > b && b)
+            float dx = hol.x - par.x;
+            float dy = hol.y - par.y;
+            float r = sqrt(dx*dx + dy*dy);
+            if(r > .1)
             {
-                dx = 1;
-                dy = b / a;
+                particle.velocity.x -= dx/(r*r);
+                particle.velocity.y -= dy/(r*r);
             }
-
-            else if (b > a && a)
-            {
-                dy = 1;
-                dx = a / b;
-            }
-
-            /* if (a < 1)
-                 dx = 0;
-             if (b < 1)
-                 dy = 0; */
-            a = hol.x - par.x;
-            b = hol.y - par.y;
-            if (a < 0)
-                dx = -dx;
-            if (b < 0)
-                dy = -dy;
-
-            particle.velocity.x -= dx / c;
-            particle.velocity.y -= dy / c;
-
         }
     }
 };

@@ -13,7 +13,7 @@ $(APPNAME): $(obj)
 -include $(dep)
 
 %.d: %.cpp
-	@$(CPP) $< -MM -MT $(@:.d=.o) >$@
+	@$(CPP) $< $(CPPFLAGS) -MM -MT $(@:.d=.o) >$@
 
 .PHONY: install
 install: $(APPNAME)
