@@ -1,8 +1,10 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include "particle.cpp"
+#include "particle.h"
 
 class BHole
 {
