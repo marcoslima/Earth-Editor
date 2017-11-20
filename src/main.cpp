@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "wHole.h"
+#include <wHole.h>
 
 void input();
 
@@ -20,16 +20,14 @@ std::vector<WHole> wHoles;
 
 Material material = none;
 
-
-
-
 int main()
 {
     settings.antialiasingLevel = 8;
-    window = new sf::RenderWindow( sf::VideoMode(1280, 800, 32), "Earth-Editor", sf::Style::Close | sf::Style::Titlebar , settings ); //sf::Style::Close | sf::Style::Titlebar
+    window = new sf::RenderWindow( sf::VideoMode(1280, 800, 32),
+        "Earth-Editor", sf::Style::Close | sf::Style::Titlebar,
+        settings);  // sf::Style::Close | sf::Style::Titlebar
     window->setFramerateLimit(60);
-    //window->setKeyRepeatEnabled(false);
-
+    // window->setKeyRepeatEnabled(false);
 
     while (window->isOpen())
     {
@@ -47,7 +45,7 @@ int main()
         for(int i = 0; i<value; i++)
         {
             wHoles[i].gravity(particles);
-            window->draw(wHoles[i].rect);
+            window->draw(wHoles[i].m_rect);
         }
 
         value = particles.size();

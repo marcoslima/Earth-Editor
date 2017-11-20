@@ -28,5 +28,11 @@
 *.out
 *.app
 
+# Dependency files
+*.d
+
+# Project specific
 Earth_Editor.*
 bin/
+Makefile
+
