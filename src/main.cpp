@@ -25,7 +25,7 @@ int main()
     settings.antialiasingLevel = 8;
     window = new sf::RenderWindow( sf::VideoMode(1280, 800, 32),
         "Earth-Editor", sf::Style::Close | sf::Style::Titlebar,
-        settings);  // sf::Style::Close | sf::Style::Titlebar
+        settings);
     window->setFramerateLimit(60);
     // window->setKeyRepeatEnabled(false);
 
@@ -34,36 +34,29 @@ int main()
         input();
         window->clear(sf::Color(5, 5, 5));
 
-        int value = bHoles.size();
-        for(int i = 0; i<value; i++)
+        for(auto& bhole : bHoles)
         {
-            bHoles[i].gravity(particles);
-            window->draw(bHoles[i].rect);
+            bHole.gravity(particles);
+            window->draw(bHole.rect);
         }
 
-        value = wHoles.size();
-        for(int i = 0; i<value; i++)
+        for(auto& whole : wHoles)
         {
-            wHoles[i].gravity(particles);
-            window->draw(wHoles[i].m_rect);
+            wHole.gravity(particles);
+            window->draw(wHole.m_rect);
         }
 
-        value = particles.size();
-        for(int i = 0; i<value; i++)
+        for(auto& particle : particles)
         {
-            particles[i].move();
-            window->draw(particles[i].rect);
+            particle.move();
+            window->draw(particle.rect);
         }
-
-
 
         window->display();
     }
     return 0;
 }
 
-//12312312312312
-//121231231231231
 void input()
 {
     sf::Event event;
@@ -101,6 +94,7 @@ void input()
                     break;
             }
         }
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
         {
             bHoles.clear();
