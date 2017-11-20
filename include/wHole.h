@@ -9,55 +9,31 @@
 class WHole
 {
 public:
-    sf::RectangleShape rect;
+    sf::RectangleShape m_rect;
 
     WHole(sf::Vector2i position)
     {
-        rect.setSize(sf::Vector2f(2,2));
-        rect.setOrigin( sf::Vector2f(1,1) );
-        rect.setFillColor( sf::Color::White );
-        rect.setPosition( (sf::Vector2f)position );
+        m_rect.setSize(sf::Vector2f(2, 2));
+        m_rect.setOrigin( sf::Vector2f(1, 1) );
+        m_rect.setFillColor( sf::Color::White );
+        m_rect.setPosition( (sf::Vector2f)position );
     }
 
     void gravity( std::vector<Particle> &particles )
     {
-        int vecSize = particles.size();
-        for(int i = 0; i < vecSize; i++ )
+        sf::Vector2f hol = m_rect.getPosition();
+        for (auto& particle : particles)
         {
-            sf::Vector2f par = particles[i].rect.getPosition();
-            sf::Vector2f hol = rect.getPosition();
+            sf::Vector2f par = particle.rect.getPosition();
 
-            float a = std::max( par.x, hol.x ) - std::min( par.x, hol.x );
-            float b = std::max( par.y, hol.y ) - std::min( par.y, hol.y );
-            float c = std::sqrt(a*a + b*b);
-            float dx, dy;
-
-            if(a>b && b)
+            float dx = hol.x - par.x;
+            float dy = hol.y - par.y;
+            float r = sqrt(dx*dx + dy*dy);
+            if(r > .1)
             {
-                dx = 1;
-                dy = b/a;
+                particle.velocity.x -= dx/(r*r);
+                particle.velocity.y -= dy/(r*r);
             }
-
-            else if(b>a && a)
-            {
-                dy = 1;
-                dx = a/b;
-            }
-
-           /* if (a < 1)
-                dx = 0;
-            if (b < 1)
-                dy = 0; */
-            a = hol.x - par.x;
-            b = hol.y - par.y;
-            if (a < 0)
-                dx = -dx;
-            if (b < 0)
-                dy = -dy;
-
-            particles[i].velocity.x -= dx/c;
-            particles[i].velocity.y -= dy/c;
-
         }
     }
 };
