@@ -1,0 +1,25 @@
+src = $(wildcard src/*.cpp)
+obj = $(src:.cpp=.o)
+dep = $(obj:.o=.d)
+
+LDFLAGS = `pkg-config sfml-all --libs`
+CPPFLAGS = `pkg-config sfml-all --cflags` -Iinclude
+
+APPNAME = EarthEditor
+
+$(APPNAME): $(obj)
+	$(CXX) -o bin/$@ $^ $(LDFLAGS)
+
+-include $(dep)
+
+%.d: %.cpp
+	@$(CPP) $< -MM -MT $(@:.d=.o) >$@
+
+.PHONY: install
+install: $(APPNAME)
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp $< $(DESTDIR)$(PREFIX)/bin/$(APPNAME)
+
+.PHONY: uninstall
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/$(APPNAME)
