@@ -19,19 +19,17 @@ public:
 
     void tick(void)
     {
-        for(auto& bhole : _black_holes)
+        for(auto& part : _particles)
         {
-            bhole.gravity(_particles);
-        }
-
-        for(auto& whole : _white_holes)
-        {
-            whole.gravity(_particles);
-        }
-
-        for(auto& particle : _particles)
-        {
-            particle.move();
+            for(const auto& bhole : _black_holes)
+            {
+                part.apply_bHole(bhole);
+            }
+            for(const auto& whole : _white_holes)
+            {
+                part.apply_wHole(whole);
+            }
+            part.move();
         }
     }
 
