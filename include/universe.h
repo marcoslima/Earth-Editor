@@ -63,9 +63,9 @@ public:
         _white_holes.push_back(WHole(pos));
     }
 
-    void add_particle(sf::Vector2i pos)
+    void add_particle(sf::Vector2i pos, sf::Vector2f vel)
     {
-        _particles.push_back(Particle(pos));
+        _particles.push_back(Particle(pos, vel));
     }
 
     void clear(void)
